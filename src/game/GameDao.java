@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import model.Direction;
 import model.Exit;

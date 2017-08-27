@@ -1,11 +1,11 @@
-package Game;
+package utils;
 
 public class Constants {
 
     //TIME CONSTANTS
-    public static final int PING = 1000;
+    //public static final int PING = 1000;
     public static final int TIC = 20000;
-    public static final int TICS_PER_DAY = 24;
+    //public static final int TICS_PER_DAY = 24;
 
     //MESSAGE CONSTANTS
     public static final String UNRECOGNIZED = "Unrecognized Command\n";

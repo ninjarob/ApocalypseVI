@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import character.CharacterState;
 
@@ -6,10 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.Socket;
-import java.util.StringTokenizer;
 
 public class Client implements Runnable {
 
@@ -29,20 +26,21 @@ public class Client implements Runnable {
     }
 
     public void run() {
-        BufferedReader in = null;
+        BufferedReader in;
         characterState.setRoom(g.getZones().get(10).getRooms().get(1));
 
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
         String nextline;
         try {
             writeMessage(characterState.getRoom().getDescription()+"\n\n");
             while ((nextline = in.readLine()) != null) {
-                String output = CommandCenter.handleCommand(nextline, g, this, characterState);
+                String output = CommandCenter.handleCommand(nextline, g, characterState);
                 writeMessage(output);
             }
             clientSocket.close();
@@ -50,7 +48,7 @@ public class Client implements Runnable {
             e.printStackTrace();
         }
 
-        if (clientSocket != null && !clientSocket.isClosed()) {
+        if (!clientSocket.isClosed()) {
             try {
                 clientSocket.close();
             } catch (IOException e) {
@@ -60,7 +58,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void writeMessage(String message) throws IOException
+    void writeMessage(String message) throws IOException
     {
         for(int i=0; i<message.length(); i++)
         {

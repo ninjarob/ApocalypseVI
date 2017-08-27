@@ -1,7 +1,6 @@
-package Game;
+package game;
 
 import model.Direction;
-import model.Room;
 import model.Zone;
 
 import java.util.Map;

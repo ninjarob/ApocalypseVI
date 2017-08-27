@@ -1,15 +1,17 @@
-package Game;
+package game;
 
 import character.CharacterState;
 import model.Exit;
+import utils.Constants;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.StringTokenizer;
 
-public class CommandCenter {
+@SuppressWarnings("unused")
+class CommandCenter {
 
-    public static String handleCommand(String input, Game g, Client c, CharacterState characterState) {
+    static String handleCommand(String input, Game g, CharacterState characterState) {
         String command = parseCommand(input, g);
         if (null == command) {
             return Constants.UNRECOGNIZED;
@@ -18,15 +20,7 @@ public class CommandCenter {
             try {
                 method = CommandCenter.class.getMethod(command, CharacterState.class);
                 return (String)(method.invoke(null, characterState));
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
@@ -64,7 +58,7 @@ public class CommandCenter {
         return go("d", characterState);
     }
 
-    public static String go(String dir, CharacterState characterState) {
+    private static String go(String dir, CharacterState characterState) {
         Exit exit = characterState.getRoom().getExits().get(dir);
         if (exit == null) return Constants.NO_DIRECTION;
         characterState.setRoom(exit.getExitRoom());

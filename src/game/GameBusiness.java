@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GameBusiness {
 
-    List<Client> clients = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
     public GameBusiness(){}
 
