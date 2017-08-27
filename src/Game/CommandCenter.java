@@ -40,7 +40,6 @@ public class CommandCenter {
         return g.getCommands().get(command);
     }
 
-
     //COMMANDS
     public static String goNorth(CharacterState characterState) {
         return go("n", characterState);
@@ -67,8 +66,7 @@ public class CommandCenter {
     }
 
     public static String go(String dir, CharacterState characterState) {
-        Room room = characterState.getRoom();
-        Exit exit = room.getExits().get(dir);
+        Exit exit = characterState.getRoom().getExits().get(dir);
         if (exit == null) return Constants.NO_DIRECTION;
         characterState.setRoom(exit.getExitRoom());
         return characterState.getRoom().getDescription();
