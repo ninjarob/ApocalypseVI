@@ -2,7 +2,6 @@ package Game;
 
 import character.CharacterState;
 import model.Exit;
-import model.Room;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
