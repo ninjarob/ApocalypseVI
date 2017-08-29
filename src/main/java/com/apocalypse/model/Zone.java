@@ -1,4 +1,4 @@
-package model;
+package com.apocalypse.model;
 
 import java.util.Map;
 

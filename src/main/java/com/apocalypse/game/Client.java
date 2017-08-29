@@ -1,7 +1,6 @@
-package game;
+package com.apocalypse.game;
 
-import character.CharacterState;
-
+import com.apocalypse.character.CharacterState;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,6 +26,9 @@ public class Client implements Runnable {
 
     public void run() {
         BufferedReader in;
+        ClientBusiness cb = new ClientBusiness();
+        //cb.loadCharacter();
+
         characterState.setRoom(g.getZones().get(10).getRooms().get(1));
 
         try {

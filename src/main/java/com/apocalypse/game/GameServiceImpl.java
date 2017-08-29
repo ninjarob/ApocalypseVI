@@ -1,14 +1,15 @@
-package game;
+package com.apocalypse.game;
+
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameBusiness {
+@Service("gameService")
+public class GameServiceImpl implements GameService {
 
     private List<Client> clients = new ArrayList<>();
-
-    public GameBusiness(){}
 
     public void addClient(Client client) {
         clients.add(client);

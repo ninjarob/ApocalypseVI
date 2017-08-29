@@ -1,8 +1,8 @@
-package game;
+package com.apocalypse.game;
 
-import character.CharacterState;
-import model.Exit;
-import utils.Constants;
+import com.apocalypse.character.CharacterState;
+import com.apocalypse.model.Exit;
+import com.apocalypse.utils.Constants;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

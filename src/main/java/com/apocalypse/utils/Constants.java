@@ -1,4 +1,4 @@
-package utils;
+package com.apocalypse.utils;
 
 public class Constants {
 

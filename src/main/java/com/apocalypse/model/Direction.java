@@ -1,4 +1,4 @@
-package model;
+package com.apocalypse.model;
 
 public class Direction {
 

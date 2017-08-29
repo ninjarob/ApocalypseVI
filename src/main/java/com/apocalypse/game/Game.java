@@ -1,7 +1,7 @@
-package game;
+package com.apocalypse.game;
 
-import model.Direction;
-import model.Zone;
+import com.apocalypse.model.Direction;
+import com.apocalypse.model.Zone;
 
 import java.util.Map;
 

@@ -1,6 +1,6 @@
-package character;
+package com.apocalypse.character;
 
-import model.Room;
+import com.apocalypse.model.Room;
 
 public class CharacterState {
 
