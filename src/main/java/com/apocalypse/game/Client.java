@@ -1,6 +1,9 @@
 package com.apocalypse.game;
 
-import com.apocalypse.character.CharacterState;
+import com.apocalypse.model.UserCharacter;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,12 +12,13 @@ import java.net.Socket;
 
 public class Client implements Runnable {
 
+    private AbstractApplicationContext context;
     private final Socket clientSocket; //initialize in const'r
     private OutputStream out;
     private Game g;
-    private CharacterState characterState = new CharacterState();
 
-    public Client(Socket _clientSocket, Game _g) {
+    public Client(AbstractApplicationContext _context, Socket _clientSocket, Game _g) {
+        context = _context;
         clientSocket = _clientSocket;
         try {
             out = clientSocket.getOutputStream();
@@ -26,10 +30,10 @@ public class Client implements Runnable {
 
     public void run() {
         BufferedReader in;
-        ClientBusiness cb = new ClientBusiness();
-        //cb.loadCharacter();
+        ClientService cb = (ClientService) context.getBean("clientService");
+        UserCharacter c = cb.loadCharacter(g);
 
-        characterState.setRoom(g.getZones().get(10).getRooms().get(1));
+        c.setRoom(g.getZones().get(10).getRooms().get(1));
 
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -40,9 +44,9 @@ public class Client implements Runnable {
 
         String nextline;
         try {
-            writeMessage(characterState.getRoom().getDescription()+"\n\n");
+            writeMessage(c.getRoom().getDescription()+"\n\n");
             while ((nextline = in.readLine()) != null) {
-                String output = CommandCenter.handleCommand(nextline, g, characterState);
+                String output = CommandCenter.handleCommand(nextline, g, c);
                 writeMessage(output);
             }
             clientSocket.close();

@@ -22,6 +22,7 @@ public class Server
         ServerStartupService startupService = (ServerStartupService) context.getBean("serverStartupService");
         GameService gameService  = (GameService) context.getBean("gameService");
 
+        //LOAD GAME
         Game g = startupService.loadGame();
 
         //START TIMERS
@@ -34,10 +35,11 @@ public class Server
         Timer ticTimer = new Timer();
         ticTimer.scheduleAtFixedRate(timerTask, 0, Constants.TIC);
 
+        //START COLLECTING CLIENTS
         ServerSocket serverSocket = new ServerSocket(23);
         for (;;) {
             Socket clientSocket = serverSocket.accept();
-            Client c = new Client(clientSocket, g);
+            Client c = new Client(context, clientSocket, g);
             gameService.addClient(c);
             new Thread(c).start();
         }

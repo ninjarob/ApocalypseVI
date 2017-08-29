@@ -1,6 +1,7 @@
 package com.apocalypse.game;
 
 import com.apocalypse.model.Direction;
+import com.apocalypse.model.Race;
 import com.apocalypse.model.Zone;
 
 import java.util.Map;
@@ -28,6 +29,17 @@ public class Game {
     public void setDirections(Map<String, Direction> directions) {
         this.directions = directions;
     }
+
+    private Map<Integer, Race> races;
+
+    public Map<Integer, Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(Map<Integer, Race> races) {
+        this.races = races;
+    }
+
 
 
     //GAME PERMANENT STATE

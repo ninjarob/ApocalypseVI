@@ -2,7 +2,7 @@ package com.apocalypse.model;
 
 import java.util.Map;
 
-public class Character {
+public class UserCharacter {
 
     //general
     private int id;
@@ -77,7 +77,7 @@ public class Character {
     private int startCode;
     private int position;
     private int flags;
-    private int room;
+    private Room room;
 
     public int getId() {
         return id;
@@ -567,11 +567,11 @@ public class Character {
         this.flags = flags;
     }
 
-    public int getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(int room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 }
