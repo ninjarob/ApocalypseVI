@@ -6,5 +6,5 @@ interface ClientService {
 
     public void createCharacter(UserCharacter c, Game g);
 
-    public UserCharacter loadCharacter(Game g);
+    public UserCharacter loadCharacter(Game g, String username);
 }

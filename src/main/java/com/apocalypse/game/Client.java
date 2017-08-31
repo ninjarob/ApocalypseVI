@@ -31,7 +31,7 @@ public class Client implements Runnable {
     public void run() {
         BufferedReader in;
         ClientService cb = (ClientService) context.getBean("clientService");
-        UserCharacter c = cb.loadCharacter(g);
+        UserCharacter c = cb.loadCharacter(g, "pocket");
 
         c.setRoom(g.getZones().get(10).getRooms().get(1));
 
@@ -47,7 +47,10 @@ public class Client implements Runnable {
             writeMessage(c.getRoom().getDescription()+"\n\n");
             while ((nextline = in.readLine()) != null) {
                 String output = CommandCenter.handleCommand(nextline, g, c);
-                writeMessage(output);
+                if (output.length() != 0) {
+                    output = output + "\n";
+                }
+                writeMessage(output + ">");
             }
             clientSocket.close();
         } catch (IOException e) {
@@ -66,9 +69,10 @@ public class Client implements Runnable {
 
     void writeMessage(String message) throws IOException
     {
-        for(int i=0; i<message.length(); i++)
-        {
-            out.write(message.charAt(i));
+        if (message != null) {
+            for (int i = 0; i < message.length(); i++) {
+                out.write(message.charAt(i));
+            }
         }
     }
 

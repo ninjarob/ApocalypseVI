@@ -8,8 +8,9 @@ public class Constants {
     //public static final int TICS_PER_DAY = 24;
 
     //MESSAGE CONSTANTS
-    public static final String UNRECOGNIZED = "Unrecognized Command\n";
-    public static final String ERROR = "We had an unexpected error.  We'll get to it eventually.\n";
+    public static final String UNRECOGNIZED = "unrecognized";
+    public static final String ERROR = "errorMessage";
+    public static final String NO_HELP_STRING = "noHelp";
 
     //TRAVEL CONSTANTS
     public static final String NO_DIRECTION = "You can't go that way.\n";

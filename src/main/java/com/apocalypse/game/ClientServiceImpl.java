@@ -13,7 +13,7 @@ public class ClientServiceImpl implements ClientService {
         clientDao.createCharacter(c, g);
     }
 
-    public UserCharacter loadCharacter(Game g) {
-        return clientDao.loadCharacter(g);
+    public UserCharacter loadCharacter(Game g, String username) {
+        return clientDao.loadCharacter(g, username);
     }
 }

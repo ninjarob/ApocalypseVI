@@ -16,11 +16,14 @@ public class ClientDaoImpl implements ClientDao {
 
     public UserCharacter loadCharacter(Game g, String username) {
 
-        UserCharacter c = jdbcTemplate.queryForObject("SELECT * FROM characters c WHERE c.username = ?", new Object[]{username}, (rs, i) -> {
+        UserCharacter c = jdbcTemplate.queryForObject("SELECT * FROM characters c WHERE c.name = ?", new Object[]{username}, (rs, i) -> {
             UserCharacter uc = new UserCharacter();
             uc.setId(rs.getInt("id"));
             uc.setName(rs.getString("name"));
             uc.setRace(g.getRaces().get(rs.getInt("race_id")));
+            uc.setRoom(g.getZones().get(rs.getInt("zone_id")).getRooms().get(rs.getInt("room_id")));
+            uc.setRace(g.getRaces().get(rs.getInt("race_id")));
+            uc.setCharacterClass(g.getCharacterClasses().get(rs.getInt("character_class_id")));
             return uc;
         });
         return c;

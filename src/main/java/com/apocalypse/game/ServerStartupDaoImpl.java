@@ -1,9 +1,6 @@
 package com.apocalypse.game;
 
-import com.apocalypse.model.Direction;
-import com.apocalypse.model.Exit;
-import com.apocalypse.model.Room;
-import com.apocalypse.model.Zone;
+import com.apocalypse.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,6 +20,12 @@ public class ServerStartupDaoImpl implements ServerStartupDao {
         g.setCommands(getCommands());
         g.setDirections(getDirections());
         g.setZones(getZones(g));
+        g.setLocalizedStrings(getLocalizedStrings(1));
+        g.setHelps(getHelps());
+        g.setClassGroups(getClassGroups(g));
+        g.setCharacterClasses(getCharacterClasses(g));
+        g.setSizes(getSizes());
+        g.setRaces(getRaces(g));
         return g;
     }
 
@@ -98,5 +101,67 @@ public class ServerStartupDaoImpl implements ServerStartupDao {
             }
         }
         return zones;
+    }
+
+    private Map<String,String> getLocalizedStrings(int langId) {
+
+        Map<String, String> localizedStrings = new HashMap<>();
+        jdbcTemplate.query("SELECT sk.key, ls.text FROM string_keys sk JOIN localized_strings ls ON sk.id = ls.string_key_id where ls.lang_id = ?", new Object[]{langId}, rs -> {
+            localizedStrings.put(rs.getString("key"), rs.getString("text"));
+        });
+        return localizedStrings;
+    }
+
+    private Map<String,String> getHelps() {
+        Map<String, String> helps = new HashMap<>();
+        jdbcTemplate.query("SELECT h.key, h.string_key from helps h", rs -> {
+            helps.put(rs.getString("key"), rs.getString("string_key"));
+        });
+        return helps;
+    }
+
+    private Map<Integer,ClassGroup> getClassGroups(Game g) {
+        Map<Integer, ClassGroup> classGroups = new HashMap<>();
+        jdbcTemplate.query("SELECT cg.id, cg.name from class_groups cg", rs -> {
+            ClassGroup cc = new ClassGroup();
+            cc.setId(rs.getInt("id"));
+            cc.setName(rs.getString("name"));
+        });
+        return classGroups;
+    }
+
+    private Map<Integer,CharacterClass> getCharacterClasses(Game g) {
+        Map<Integer, CharacterClass> characterClasses = new HashMap<>();
+        jdbcTemplate.query("SELECT cc.id, cc.name, cc.class_group_id from character_classes cc", rs -> {
+            CharacterClass cc = new CharacterClass();
+            cc.setId(rs.getInt("id"));
+            cc.setName(rs.getString("name"));
+            cc.setClassGroup(g.getClassGroups().get(rs.getInt("class_group_id")));
+            characterClasses.put(cc.getId(), cc);
+        });
+        return characterClasses;
+    }
+
+    private Map<Integer,Size> getSizes() {
+        Map<Integer, Size> sizes = new HashMap<>();
+        jdbcTemplate.query("SELECT s.id, s.name from sizes s", rs -> {
+            Size s = new Size();
+            s.setId(rs.getInt("id"));
+            s.setName(rs.getString("name"));
+            sizes.put(s.getId(), s);
+        });
+        return sizes;
+    }
+
+    private Map<Integer,Race> getRaces(Game g) {
+        Map<Integer, Race> races = new HashMap<>();
+        jdbcTemplate.query("SELECT r.id, r.name, r.size_id from races r", rs -> {
+            Race race = new Race();
+            race.setId(rs.getInt("id"));
+            race.setName(rs.getString("name"));
+            race.setSize(g.getSizes().get(rs.getInt("size_id")));
+            races.put(race.getId(), race);
+        });
+        return races;
     }
 }
