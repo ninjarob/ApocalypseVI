@@ -106,8 +106,8 @@ public class ServerStartupDaoImpl implements ServerStartupDao {
     private Map<String,String> getLocalizedStrings(int langId) {
 
         Map<String, String> localizedStrings = new HashMap<>();
-        jdbcTemplate.query("SELECT sk.key, ls.text FROM string_keys sk JOIN localized_strings ls ON sk.id = ls.string_key_id where ls.lang_id = ?", new Object[]{langId}, rs -> {
-            localizedStrings.put(rs.getString("key"), rs.getString("text"));
+        jdbcTemplate.query("SELECT sk.string_key, ls.text FROM string_keys sk JOIN localized_strings ls ON sk.id = ls.string_key_id where ls.lang_id = ?", new Object[]{langId}, rs -> {
+            localizedStrings.put(rs.getString("string_key"), rs.getString("text"));
         });
         return localizedStrings;
     }
